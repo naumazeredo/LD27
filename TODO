@@ -1,0 +1,94 @@
+Remember
+
+brief: A guy forgets everything every 10 seconds.
+    You have to take note on everything and read it
+    after forgetting to remember.
+    You are at a hospital and your drug is at home.
+
+Starting room: Bedroom
+---------------------
+|                   |
+|*   n    b    d    |
+---------------------
+
+label:  * -> player
+        n -> npc
+        b -> notebook
+        d -> door
+
+    Door: to the Lobby
+    Notebook: the notebook to take notes
+    NPC: Nurse
+
+Lobby
+---------------------------
+|                         |
+|  d   n   d     n        x
+---------------------------
+
+label:  x -> exit
+
+    Left Door: to the bedroom
+    Right Door: to Dr. Schullenger's Room
+    Left NPC: Doctor
+    Right NPC: Attendant
+
+Dr. Schullenger's Room
+---------------
+|             |
+| d    n      |
+---------------
+
+    Door: to Lobby
+    NPC: Dr. Schullenger
+
+
+Things to do/remember:
+- What's my name?
+    The nurse will say your name
+
+- Where am I?
+    The nurse will tell you that you are in a hospital
+
+- What am I doing here?
+    Doctor at Lobby will tell you that you have a disease which you forgot things every few seconds
+
+- How can I treat this?
+    Doctor will tell you that you take a drug to don't remember
+
+- Where can I find this drug?
+    Doctor will tell you to seek Dr. Schullenger
+
+- Where's Dr. Schullenger?
+    ---
+
+- Where can I take my drug?
+    Dr. Schu will tell you that you take your drug at home
+
+- Where's my house?
+    Attendant will tell you where you live at
+
+ -> Try to get out
+    Attendant won't let you go alone
+
+- Can you go home with me?
+    (todo)
+
+
+TODO:
+Player
+- move (left and right)
+- speak
+
+Room
+- room size (int)
+- Doors (vector)
+- NPCs
+- //Objects
+
+Door
+- size (standard)
+- destination room
+
+NPC
+- response phrases

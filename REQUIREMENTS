@@ -1,0 +1,5 @@
+Not Available Framework
+Required components:
+- SDL2.0.0 (mingw)
+- gcc 4.8.1
+- GNU make 3.82
