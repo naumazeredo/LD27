@@ -19,6 +19,7 @@ class Game;
 class Sprite;
 }
 
+class Door;
 class Room;
 
 class Person : public GameObject
@@ -30,7 +31,7 @@ class Person : public GameObject
   Person(Person&&) = default;
   Person& operator=(const Person&) = default;
   Person& operator=(Person&&) = default;
-  ~Person();
+  virtual ~Person();
 
   // GameObject
   virtual void Move(float x, float y) override;
@@ -44,10 +45,19 @@ class Person : public GameObject
   // Get room
   inline Room* room() const { return room_; }
 
+  // Interaction
+  void EnterDoor();
+
+  // CollisionBox
+  SDL_Rect GetCollisionBox() const;
+
   // Draw function
   virtual void Draw(float depth = 0.0f) final;
 
  protected:
+  // Interaction
+  bool IsAtDoor();
+
   // Game
   nafw::Game* game_;
 
@@ -56,6 +66,9 @@ class Person : public GameObject
 
   // Current Room
   Room* room_=nullptr;
+
+  // Room player is above (updated everytime AtDoor is called)
+  Door* door_=nullptr;
 };
 
 #endif//LD_PERSON_H_

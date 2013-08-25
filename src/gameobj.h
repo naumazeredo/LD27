@@ -36,7 +36,8 @@ class GameObject
   }
 
   // Visibility
-  inline void SetVisibility(bool visible) { visible_ = visible; }
+  inline void set_visible(bool visible) { visible_ = visible; }
+  inline bool visible() { return visible_; }
 
   // Draw function
   virtual void Draw(float depth = 0.0f)=0;

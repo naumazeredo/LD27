@@ -13,6 +13,7 @@
 #include "game.h"
 
 class Person;
+class Door;
 class Room;
 
 class LDGame : public nafw::Game
@@ -46,6 +47,9 @@ class LDGame : public nafw::Game
 
   // NPCs
   std::map<std::string, Person*> npc_;
+
+  // Doors
+  std::vector<Door*> door_;
 
   // Rooms
   std::vector<Room*> room_;

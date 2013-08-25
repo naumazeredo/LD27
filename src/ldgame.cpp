@@ -2,21 +2,25 @@
 #include "render/camera.h"
 #include "ldgame.h"
 #include "person.h"
+#include "door.h"
 #include "room.h"
 
 LDGame::~LDGame()
 {
-  /*
   for (auto& it : room_)
     if (it != nullptr)
       delete it;
   room_.clear();
 
+  for (auto& it : door_)
+    if (it != nullptr)
+      delete it;
+  door_.clear();
+
   for (auto& it : npc_)
-    if (it->second != nullptr)
-      delete it->second;
+    if (it.second != nullptr)
+      delete it.second;
   npc_.clear();
-  */
 }
 
 bool LDGame::HandleInputs()
@@ -38,6 +42,10 @@ bool LDGame::HandleInputs()
     {
       if (event.key.keysym.sym == SDLK_F4 && (event.key.keysym.mod & KMOD_LALT))
         return true;
+
+      // Enter doors
+      if (event.key.keysym.sym == SDLK_UP)
+        player_->EnterDoor();
     }
   }
 
@@ -59,22 +67,38 @@ void LDGame::LoadAssets()
   player_->SetPosition(100, 0);
 
   // Create NPCs
+  // Nurse
   Person* npc = new Person(this);
   npc->Create();
   npc_["Nurse"] = npc;
+
+  // Create Doors
+  // Bedroom -> Lobby
+  Door* door = new Door(this);
+  door_.push_back(door);
+
+  // Lobby -> Bedroom
+  door = new Door(this);
+  door_.push_back(door);
 
   // Create rooms
   // Bedroom
   Room* room = new Room(this, 400, 100);
   room->SetPosition(0, -67);
   room->AddNPC(npc_["Nurse"], 20);
+  room->AddDoor(door_[0], 280);
   room_.push_back(room);
 
   // Lobby
-  //room = new Room(this, 800, 100);
+  room = new Room(this, 600, 100);
+  room->AddDoor(door_[1], 40);
+  room_.push_back(room);
+
+  // Link Doors
+  Door::LinkDoors(door_[0], door_[1]);
 
   // Set
-  player_->SetRoom(room, 100.0f);
+  player_->SetRoom(room_[0], 100.0f);
 }
 
 void LDGame::Step(int delta)

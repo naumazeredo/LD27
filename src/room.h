@@ -18,6 +18,7 @@ namespace nafw
 class Game;
 }
 
+class Door;
 class Person;
 
 class Room : public GameObject
@@ -29,10 +30,13 @@ class Room : public GameObject
   Room(Room&&) = default;
   Room& operator=(const Room&) = default;
   Room& operator=(Room&&) = default;
-  ~Room();
+  virtual ~Room() {}
 
   // Add Person
   void AddNPC(Person* npc, int x);
+
+  // Add Door
+  void AddDoor(Door* door, int x);
 
   // Draw function
   virtual void Draw(float depth=0.0f) final;
@@ -40,6 +44,7 @@ class Room : public GameObject
   //
   inline int w() const { return w_; }
   inline int h() const { return h_; }
+  inline std::vector<Door*> DoorVector() const { return door_; }
 
  private:
   // Game
@@ -50,6 +55,9 @@ class Room : public GameObject
 
   // NPCs
   std::vector<Person*> npc_;
+
+  // Doors
+  std::vector<Door*> door_;
 };
 
 #endif//LD_ROOM_H_
