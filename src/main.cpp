@@ -2,13 +2,13 @@
 #include <cstdio>
 #include <cassert>
 
-#include "game.h"
+#include "ldgame.h"
 
 // TODO Create a good assertion failure
 
 int main(int argc, char** argv)
 {
-  nafw::Game app;
+  LDGame app;
 
   if (!app.Start("Not Available FrameWork", argc, argv))
     return 1;

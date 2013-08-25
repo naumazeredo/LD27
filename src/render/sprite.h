@@ -45,17 +45,16 @@ class Sprite : public RenderObject, public ISprite
   // IRenderObject
   virtual void Draw(int x, int y, float depth = 0.0f) override;
 
+  //
+  void GetSize(int* w, int* h);
+
  private:
   void Free();
 
   // Texture settings
   Texture* texture_ = nullptr;
-
   Rect* clip_ = nullptr;
-  //bool has_clip_ = false;
-
   Point* center_ = nullptr;
-  //bool has_center_ = false;
 
   float scale_ = 1.0f;
   double angle_ = 0.0f;

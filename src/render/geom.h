@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef NAFW_GEOM_H_
-#define NAFW_GEOM_H_
+#ifndef NAFW_RENDER_GEOM_H_
+#define NAFW_RENDER_GEOM_H_
 
 namespace nafw
 {
@@ -59,4 +59,4 @@ class Rect
 
 }
 
-#endif//NAFW_GEOM_H_
+#endif//NAFW_RENDER_GEOM_H_

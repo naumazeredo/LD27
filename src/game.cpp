@@ -17,6 +17,7 @@
 #include "render/sprite.h"
 #include "render/animatedsprite.h"
 #include "render/geom.h"
+#include "render/camera.h"
 
 namespace nafw
 {
@@ -34,6 +35,8 @@ Game::~Game()
     delete timer_;
   if (renderer_ != nullptr)
     delete renderer_;
+  if (camera_ != nullptr)
+    delete camera_;
 }
 
 bool Game::Start(const char* title, int argc, char** argv)
@@ -60,13 +63,16 @@ bool Game::Start(const char* title, int argc, char** argv)
     printf("Linear texture filtering not enabled!\n");
   }
 
+  width_ = WINDOW_WIDTH;
+  height_ = WINDOW_HEIGHT;
+
   // Create window
   window_ = SDL_CreateWindow(
     title,
     SDL_WINDOWPOS_CENTERED,
     SDL_WINDOWPOS_CENTERED,
-    WINDOW_WIDTH,
-    WINDOW_HEIGHT,
+    width_,
+    height_,
     SDL_WINDOW_SHOWN
   );
   if (window_ == NULL)
@@ -75,7 +81,9 @@ bool Game::Start(const char* title, int argc, char** argv)
     return false;
   }
 
-  renderer_ = new Renderer(window_, SDL_RENDERER_ACCELERATED);
+  renderer_ = new Renderer(this, SDL_RENDERER_ACCELERATED);
+
+  LoadAssets();
 
   this->init_ = true;
 
@@ -99,6 +107,10 @@ void Game::ToggleFullscreen()
 {
   this->fullscreen_ = !this->fullscreen_;
   SetFullscreen(this->fullscreen_, false);
+}
+
+void Game::LoadAssets()
+{
 }
 
 bool Game::HandleInputs()
@@ -126,24 +138,6 @@ bool Game::HandleInputs()
 bool Game::Run()
 {
   SDL_assert(this->init_);
-
-  // Testing area
-  AnimatedSprite anim;
-  anim.Create(renderer_, "assets/transp.png");
-
-  anim.AddClip(new Rect(0, 0, 32, 32), nullptr, false);
-  anim.AddClip(new Rect(32, 0, 32, 32), nullptr, false);
-  anim.AddClip(new Rect(64, 0, 32, 32), nullptr, false);
-  anim.AddClip(new Rect(96, 0, 32, 32), nullptr, false);
-
-  anim.AddFrame(1, 1000);
-  anim.AddFrame(2, 1000);
-  anim.AddFrame(3, 1000);
-  anim.AddFrame(2, 1000);
-
-  anim.PlayAnimation();
-  anim.SetAnimationLoop(true);
-  // -----
 
   // Physics
   physics_dt = 10;
@@ -220,8 +214,8 @@ bool Game::Run()
       // Physics
       if (physics_accum >= physics_dt)
       {
-        //
-        anim.Step(physics_dt);
+        // Update physics
+        PhysicsStep(physics_dt);
 
         /* TODO Step physics */
         // Pass timer_->GetTime() + delta_physics to physics
@@ -231,17 +225,23 @@ bool Game::Run()
       }
     }
 
+    // General step
+    Step(timer_->GetDelta());
+
     /* TODO Integrate the exceding time in physics */
 
     /* TODO Render */
     renderer_->ClearScreen();
 
     Draw();
-    anim.Draw(100, 100);
 
     renderer_->RenderScreen();
 
     // FPS counter
+    // instant FPS
+    fps_ = 1000.0f / timer_->GetDelta();
+
+    // per second FPS
     ++framecount;
     if (timer_->GetTime() - frametime >= 1000)
     {
@@ -257,6 +257,15 @@ bool Game::Run()
 
   // Finish game
   return false;
+}
+
+void Game::Step(int delta)
+{
+  SDL_assert(this->init_);
+}
+
+void Game::PhysicsStep(int delta)
+{
 }
 
 void Game::Draw()

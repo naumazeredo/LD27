@@ -49,6 +49,21 @@ void Sprite::Draw(int x, int y, float depth)
   renderer_->DrawTexture(texture_, Point(x, y), clip_, scale_, center_, angle_, is_flipped_);
 }
 
+void Sprite::GetSize(int* w, int* h)
+{
+  SDL_assert(init_);
+  if (clip_ != nullptr)
+  {
+    if (w != nullptr) *w = clip_->w;
+    if (h != nullptr) *h = clip_->h;
+  }
+  else
+  {
+    if (w != nullptr) *w = texture_->w();
+    if (h != nullptr) *h = texture_->h();
+  }
+}
+
 void Sprite::Free()
 {
   if (clip_ != nullptr) delete clip_;

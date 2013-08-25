@@ -26,7 +26,7 @@ bool Texture::Load(std::string path)
     return false;
   }
 
-  SDL_QueryTexture(temp, nullptr, nullptr, &width_, &height_);
+  SDL_QueryTexture(temp, nullptr, nullptr, &w_, &h_);
   texture_ = temp;
 
   path_ = path;
@@ -68,8 +68,8 @@ void Texture::Free()
   if (loaded_ && texture_ != nullptr)
   {
     SDL_DestroyTexture(texture_);
-    width_ = 0;
-    height_ = 0;
+    w_ = 0;
+    h_ = 0;
     loaded_ = false;
     path_.clear();
   }

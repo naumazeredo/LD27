@@ -48,8 +48,8 @@ class Texture
   void Free();
 
   // Accessors
-  inline int GetWidth() const { return width_; }
-  inline int GetHeight() const { return height_; }
+  inline int w() const { return w_; }
+  inline int h() const { return h_; }
   inline std::string GetPath() const { return path_; }
   SDL_Texture* GetTexture();
  public:
@@ -63,7 +63,7 @@ class Texture
   std::string path_;
 
   // Image dimensions
-  int width_=0, height_=0;
+  int w_=0, h_=0;
 
   // Verifiers
   bool loaded_=false;

@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef NAFW_RENDEROBJ_H_
-#define NAFW_RENDEROBJ_H_
+#ifndef NAFW_RENDER_RENDEROBJ_H_
+#define NAFW_RENDER_RENDEROBJ_H_
 
 #include "interfaces.h"
 
@@ -35,5 +35,5 @@ class RenderObject : public IRenderObject
 
 }
 
-#endif//NAFW_RENDEROBJ_H_
+#endif//NAFW_RENDER_RENDEROBJ_H_
 

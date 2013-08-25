@@ -48,35 +48,35 @@ void AnimatedSprite::AddFrame(unsigned int clip_index, unsigned int duration)
 
     frame_clip_.push_back(clip_index);
     frame_duration_.push_back(duration);
-  }
+}
 
-  void AnimatedSprite::SetAnimationLoop(bool loop)
-  {
-    loop_ = loop;
-  }
+void AnimatedSprite::SetAnimationLoop(bool loop)
+{
+  loop_ = loop;
+}
 
-  void AnimatedSprite::PlayAnimation()
-  {
-    playing_ = true;
-  }
+void AnimatedSprite::PlayAnimation()
+{
+  playing_ = true;
+}
 
-  void AnimatedSprite::PauseAnimation()
-  {
-    playing_ = false;
-  }
+void AnimatedSprite::PauseAnimation()
+{
+  playing_ = false;
+}
 
-  void AnimatedSprite::StopAnimation()
-  {
-    playing_ = false;
-    current_frame_ = 0;
-    current_time_ = 0;
-  }
+void AnimatedSprite::StopAnimation()
+{
+  playing_ = false;
+  current_frame_ = 0;
+  current_time_ = 0;
+}
 
-  void AnimatedSprite::Step(unsigned int delta)
-  {
-    SDL_assert(!frame_clip_.empty());
+void AnimatedSprite::Step(int delta)
+{
+  SDL_assert(!frame_clip_.empty());
 
-    current_time_ += delta;
+  current_time_ += delta;
   while (current_time_ >= frame_duration_[current_frame_])
   {
     current_time_ -= frame_duration_[current_frame_];

@@ -14,7 +14,7 @@
 
 #include <vector>
 #include <string>
-#include "../SDL2/SDL_stdinc.h"
+//#include "../SDL2/SDL_stdinc.h"
 #include "../SDL2/SDL_rect.h"
 #include "../SDL2/SDL_render.h"
 #include "constants.h"
@@ -28,14 +28,14 @@ namespace nafw
 class Point;
 class Rect;
 class Texture;
+class Game;
 
 // TODO Gather all drawing to do one
 class Renderer
 {
  public:
   // Constructor and Destructor
-  //Renderer() {}
-  Renderer(SDL_Window* window, Uint32 flags);
+  Renderer(Game* game, Uint32 flags);
   ~Renderer();
 
   // Return Renderer
@@ -59,6 +59,12 @@ class Renderer
   void RenderScreen();
 
  private:
+  // Get Viewport
+  SDL_Rect GetViewport();
+
+  // Game
+  Game* game_;
+
   // SDL Renderer
   SDL_Renderer* renderer_ = nullptr;
 

@@ -52,7 +52,7 @@ class AnimatedSprite : public RenderObject, public ISprite, public IAnimation
   virtual void StopAnimation() override;
 
   // IStep
-  virtual void Step(unsigned int delta) override;
+  virtual void Step(int delta) override;
 
   // IRenderObject
   virtual void Draw(int x, int y, float depth = 0.0f) override;

@@ -77,13 +77,13 @@ Things to do/remember:
 
 TODO:
 Player
-- move (left and right)
+- move (left and right)     OK!!!
 - speak
 
 Room
-- room size (int)
+- room size (int)       OK!!!
 - Doors (vector)
-- NPCs
+- NPCs                  OK!!!
 - //Objects
 
 Door

@@ -25,7 +25,7 @@ class Renderer;
 interface ISteppable
 {
  public:
-  virtual void Step(unsigned int delta)=0;
+  virtual void Step(int delta)=0;
 };
 
 interface ISprite
