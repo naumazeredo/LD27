@@ -3,11 +3,13 @@
 #include "../SDL2/SDL_video.h"
 #include "../SDL2/SDL_image.h"
 #include "../SDL2/SDL_rect.h"
+#include "../SDL2/SDL_ttf.h"
 #include "texture.h"
 #include "renderer.h"
 #include "geom.h"
 #include "../game.h"
 #include "camera.h"
+#include "font.h"
 
 namespace nafw
 {
@@ -187,6 +189,15 @@ void Renderer::DrawCircle(SDL_Point center, float radius, SDL_Color color, float
   }
 
   SDL_SetRenderDrawColor(renderer_, r, g, b, a);
+}
+
+void Renderer::DrawText(std::string text, Point position, SDL_Color color)
+{
+  if (game_->font() == nullptr) return;
+
+  Texture texture(this);
+  texture.LoadText(game_->font(), text.c_str(), color);
+  DrawTexture(&texture, position);
 }
 
 void Renderer::ClearScreen()

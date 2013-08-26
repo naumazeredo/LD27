@@ -18,6 +18,7 @@
 #include "render/animatedsprite.h"
 #include "render/geom.h"
 #include "render/camera.h"
+#include "render/font.h"
 
 namespace nafw
 {
@@ -37,6 +38,8 @@ Game::~Game()
     delete renderer_;
   if (camera_ != nullptr)
     delete camera_;
+  if (font_ != nullptr)
+    TTF_CloseFont(font_->font());
 }
 
 bool Game::Start(const char* title, int argc, char** argv)
@@ -82,6 +85,12 @@ bool Game::Start(const char* title, int argc, char** argv)
   }
 
   renderer_ = new Renderer(this, SDL_RENDERER_ACCELERATED);
+
+  if (TTF_Init() == -1)
+  {
+    printf("Could not initialize ttf! TTF error: %s\n", TTF_GetError());
+    return false;
+  }
 
   LoadAssets();
 

@@ -10,8 +10,10 @@
 #ifndef LD_PERSON_H_
 #define LD_PERSON_H_
 
+#include <map>
 #include <string>
 #include "gameobj.h"
+#include "question.h"
 
 namespace nafw
 {
@@ -51,12 +53,21 @@ class Person : public GameObject
   // CollisionBox
   SDL_Rect GetCollisionBox() const;
 
+  // Speak
+  void Speak(Question question);
+
+  // Add phrases
+  void AddPhrase(Question question, std::string phrase);
+
   // Draw function
   virtual void Draw(float depth = 0.0f) final;
 
  protected:
   // Interaction
   bool IsAtDoor();
+
+  // Draw text
+  void DrawSpeak();
 
   // Game
   nafw::Game* game_;
@@ -69,6 +80,11 @@ class Person : public GameObject
 
   // Room player is above (updated everytime AtDoor is called)
   Door* door_=nullptr;
+
+  // phrases
+  std::map<Question, std::string> phrases_;
+  Question cur_question_;
+  bool speaking_ = false;
 };
 
 #endif//LD_PERSON_H_

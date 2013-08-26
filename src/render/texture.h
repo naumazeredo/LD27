@@ -17,11 +17,13 @@
 #include "../SDL2/SDL_stdinc.h"
 #include "../SDL2/SDL_rect.h"
 #include "../SDL2/SDL_render.h"
+#include "constants.h"
 
 struct SDL_Texture;
 
 namespace nafw
 {
+class Font;
 class Renderer;
 
 /**
@@ -42,6 +44,7 @@ class Texture
 
   // Mutators
   bool Load(std::string path);
+  bool LoadText(Font* font, std::string text, SDL_Color color = Color::black);
   void SetColor(Uint8 r, Uint8 g, Uint8 b);
   void SetBlendMode(SDL_BlendMode blending);
   void SetAlpha(Uint8 alpha);

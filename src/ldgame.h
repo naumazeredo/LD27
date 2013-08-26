@@ -11,10 +11,17 @@
 #include <vector>
 #include <map>
 #include "game.h"
+#include "question.h"
 
 class Person;
 class Door;
 class Room;
+
+namespace nafw
+{
+class Texture;
+class Font;
+}
 
 class LDGame : public nafw::Game
 {
@@ -42,8 +49,10 @@ class LDGame : public nafw::Game
     MOVE_RIGHT,
     MOVE_LEFT
   };
-
   PlayerMove move_player_ = MOVE_NOWHERE;
+
+  // Progress
+  Question progress_ = QUESTION_WHO;
 
   // NPCs
   std::map<std::string, Person*> npc_;

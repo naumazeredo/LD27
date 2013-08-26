@@ -3,6 +3,7 @@
 #include "../SDL2/SDL_image.h"
 #include "renderer.h"
 #include "texture.h"
+#include "font.h"
 
 namespace nafw
 {
@@ -34,6 +35,38 @@ bool Texture::Load(std::string path)
 
   // Return success
   return texture_ != nullptr;
+}
+
+bool Texture::LoadText(Font* font, std::string text, SDL_Color color)
+{
+  SDL_assert(renderer_ != nullptr);
+
+  //Deallocate texture
+  Free();
+
+  SDL_Surface* surface = TTF_RenderText_Solid(font->font(), text.c_str(), color);
+  if (surface == nullptr)
+  {
+    printf("Could not create surface from ttf! SDL error: %s\n", SDL_GetError());
+    return false;
+  }
+
+  // Create texture from surface
+  texture_ = SDL_CreateTextureFromSurface(renderer_->GetRenderer(), surface);
+  if (texture_ == nullptr)
+  {
+    printf("Could not create texture from surface! SDL error: %s\n", SDL_GetError());
+    return false;
+  }
+
+  w_ = surface->w;
+  h_ = surface->h;
+
+  SDL_FreeSurface(surface);
+
+  loaded_ = true;
+
+  return true;
 }
 
 void Texture::SetColor(Uint8 r, Uint8 g, Uint8 b)

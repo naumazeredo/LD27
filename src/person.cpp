@@ -5,6 +5,8 @@
 #include "room.h"
 #include "game.h"
 #include "render/sprite.h"
+#include "render/geom.h"
+#include "render/renderer.h"
 
 Person::~Person()
 {
@@ -115,6 +117,31 @@ SDL_Rect Person::GetCollisionBox() const
   return rect;
 }
 
+void Person::Speak(Question question)
+{
+  cur_question_ = question;
+  speaking_ = true;
+}
+
+void Person::DrawSpeak()
+{
+  nafw::Point pos(x_ + room_->x() - 20, -20);
+  if (phrases_.find(cur_question_) != phrases_.end())
+  {
+    game_->renderer()->DrawText(phrases_.find(cur_question_)->second.c_str(), pos);
+  }
+  else
+  {
+    game_->renderer()->DrawText("I don't know", pos);
+  }
+}
+
+void Person::AddPhrase(Question question, std::string phrase)
+{
+  if (phrases_.find(question) != phrases_.end()) return;
+  phrases_[question] = phrase;
+}
+
 void Person::Draw(float depth)
 {
   SDL_assert(init_);
@@ -129,4 +156,6 @@ void Person::Draw(float depth)
   }
   //sprite_[facing_]->Draw(x, y, depth);
   sprite_[facing_]->Draw(x, 0, depth);
+
+  if (speaking_ ) DrawSpeak();
 }

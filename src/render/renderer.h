@@ -14,7 +14,6 @@
 
 #include <vector>
 #include <string>
-//#include "../SDL2/SDL_stdinc.h"
 #include "../SDL2/SDL_rect.h"
 #include "../SDL2/SDL_render.h"
 #include "constants.h"
@@ -54,6 +53,9 @@ class Renderer
   void DrawRect(SDL_Rect rect, SDL_Color color = Color::black);
   void DrawFillRect(SDL_Rect rect, SDL_Color color = Color::black);
   void DrawCircle(SDL_Point center, float radius, SDL_Color color = Color::black, float arc_delta=5.0f);
+
+  // Text drawing
+  void DrawText(std::string text, Point position, SDL_Color color = Color::black);
 
   void ClearScreen();
   void RenderScreen();

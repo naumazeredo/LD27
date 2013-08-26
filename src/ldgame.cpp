@@ -1,9 +1,14 @@
 #include "SDL2/SDL.h"
+#include "SDL2/SDL_ttf.h"
 #include "render/camera.h"
 #include "ldgame.h"
 #include "person.h"
 #include "door.h"
 #include "room.h"
+#include "render/renderer.h"
+#include "render/geom.h"
+#include "render/font.h"
+#include "render/texture.h"
 
 LDGame::~LDGame()
 {
@@ -46,6 +51,9 @@ bool LDGame::HandleInputs()
       // Enter doors
       if (event.key.keysym.sym == SDLK_UP)
         player_->EnterDoor();
+
+      if (event.key.keysym.sym == SDLK_SPACE)
+        player_->Speak(progress_);
     }
   }
 
@@ -54,6 +62,11 @@ bool LDGame::HandleInputs()
 
 void LDGame::LoadAssets()
 {
+  //
+  nafw::Font* font = new nafw::Font();
+  font->Load();
+  SetFont(font);
+
   // Create camera
   nafw::Camera* camera = new nafw::Camera(this);
   camera->SetMovement(true);
@@ -65,6 +78,7 @@ void LDGame::LoadAssets()
   player_ = new Person(this);
   player_->Create("player");
   player_->SetPosition(100, 0);
+  player_->AddPhrase(QUESTION_WHO, "Who am I?");
 
   // Create NPCs
   // Nurse

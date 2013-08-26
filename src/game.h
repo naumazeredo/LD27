@@ -23,6 +23,7 @@ namespace nafw
 class Timer;
 class Renderer;
 class Camera;
+class Font;
 
 const unsigned int WINDOW_WIDTH = 640;
 const unsigned int WINDOW_HEIGHT = 480;
@@ -81,6 +82,10 @@ class Game
   inline void SetCamera(Camera* camera) { camera_ = camera; }
   inline Camera* camera() const { return camera_; }
 
+  // Font
+  inline Font* font() const { return font_; }
+  inline void SetFont(Font* font) { font_ = font; }
+
  protected:
   // Handle inputs
   virtual bool HandleInputs();
@@ -105,10 +110,13 @@ class Game
   int physics_dt;
 
   // Game Timer
-  nafw::Timer* timer_;
+  Timer* timer_;
 
   // FPS
   float fps_ = 60.0f;
+
+  // Font
+  Font* font_;
 };
 
 // Not Available Framework

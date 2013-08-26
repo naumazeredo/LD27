@@ -10,7 +10,7 @@ int main(int argc, char** argv)
 {
   LDGame app;
 
-  if (!app.Start("Not Available FrameWork", argc, argv))
+  if (!app.Start("Ludum Dare 27", argc, argv))
     return 1;
 
   exit(app.Run());

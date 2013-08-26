@@ -11,7 +11,7 @@ EXECUTABLE = nafw
 vpath %.cpp src/
 vpath %.cpp src/render/
 
-LIBS := mingw32 SDL2main SDL2 SDL2_image SDL2_net
+LIBS := mingw32 SDL2main SDL2 SDL2_image SDL2_ttf
 LIBSSOURCE := "C:\SDL-2.0.0-mingw\lib"
 
 debug: CXX += -DDEBUG
