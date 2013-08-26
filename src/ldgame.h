@@ -36,6 +36,8 @@ class LDGame : public nafw::Game
   virtual void PhysicsStep(int delta) override;
   virtual void Draw() override;
 
+  Question question() const { return question_; }
+
  protected:
   virtual bool HandleInputs() override;
 
@@ -52,7 +54,7 @@ class LDGame : public nafw::Game
   PlayerMove move_player_ = MOVE_NOWHERE;
 
   // Progress
-  Question progress_ = QUESTION_WHO;
+  Question question_ = QUESTION_WHO;
 
   // NPCs
   std::map<std::string, Person*> npc_;

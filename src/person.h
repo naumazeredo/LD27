@@ -54,10 +54,16 @@ class Person : public GameObject
   SDL_Rect GetCollisionBox() const;
 
   // Speak
-  void Speak(Question question);
+  void Speak();
+  void SpeakDelay(int delay);
+  inline void set_responsive(bool resp) { responsive_ = resp; }
+  inline bool responsive() { return responsive_; }
 
   // Add phrases
   void AddPhrase(Question question, std::string phrase);
+
+  // Step
+  void Step(int delta);
 
   // Draw function
   virtual void Draw(float depth = 0.0f) final;
@@ -83,8 +89,11 @@ class Person : public GameObject
 
   // phrases
   std::map<Question, std::string> phrases_;
-  Question cur_question_;
   bool speaking_ = false;
+  int speaking_accum_ = 0;
+  bool delay_ = false;
+  int delay_accum_ = 0;
+  bool responsive_ = true;
 };
 
 #endif//LD_PERSON_H_

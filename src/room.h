@@ -45,6 +45,7 @@ class Room : public GameObject
   inline int w() const { return w_; }
   inline int h() const { return h_; }
   inline std::vector<Door*> DoorVector() const { return door_; }
+  inline std::vector<Person*> NPCVector() const { return npc_; }
 
  private:
   // Game

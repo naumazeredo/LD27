@@ -7,6 +7,7 @@
 #include "render/sprite.h"
 #include "render/geom.h"
 #include "render/renderer.h"
+#include "ldgame.h"
 
 Person::~Person()
 {
@@ -117,18 +118,31 @@ SDL_Rect Person::GetCollisionBox() const
   return rect;
 }
 
-void Person::Speak(Question question)
+void Person::Speak()
 {
-  cur_question_ = question;
   speaking_ = true;
+
+  std::vector<Person*> npc = room_->NPCVector();
+  for (auto& it : npc)
+    if (x_ - it->x() < 50 && it->x() - x_ < 50)
+      if (it->responsive())
+        it->SpeakDelay(500);
+}
+
+void Person::SpeakDelay(int delay)
+{
+  if (delay_) return;
+  delay_ = true;
+  delay_accum_ = delay;
 }
 
 void Person::DrawSpeak()
 {
   nafw::Point pos(x_ + room_->x() - 20, -20);
-  if (phrases_.find(cur_question_) != phrases_.end())
+  Question quest = dynamic_cast<LDGame*>(game_)->question();
+  if (phrases_.find(quest) != phrases_.end())
   {
-    game_->renderer()->DrawText(phrases_.find(cur_question_)->second.c_str(), pos);
+    game_->renderer()->DrawText(phrases_.find(quest)->second.c_str(), pos);
   }
   else
   {
@@ -140,6 +154,32 @@ void Person::AddPhrase(Question question, std::string phrase)
 {
   if (phrases_.find(question) != phrases_.end()) return;
   phrases_[question] = phrase;
+}
+
+void Person::Step(int delta)
+{
+  if (speaking_)
+  {
+    speaking_accum_ += delta;
+    if (speaking_accum_ >= 1500)
+    {
+      speaking_ = false;
+      speaking_accum_ = 0;
+    }
+  }
+  else
+  {
+    if (delay_)
+    {
+      delay_accum_ -= delta;
+      if (delay_accum_ <= 0)
+      {
+        delay_ = false;
+        delay_accum_ = 0;
+        Speak();
+      }
+    }
+  }
 }
 
 void Person::Draw(float depth)
@@ -157,5 +197,5 @@ void Person::Draw(float depth)
   //sprite_[facing_]->Draw(x, y, depth);
   sprite_[facing_]->Draw(x, 0, depth);
 
-  if (speaking_ ) DrawSpeak();
+  if (speaking_) DrawSpeak();
 }

@@ -53,7 +53,7 @@ bool LDGame::HandleInputs()
         player_->EnterDoor();
 
       if (event.key.keysym.sym == SDLK_SPACE)
-        player_->Speak(progress_);
+        player_->Speak();
     }
   }
 
@@ -77,6 +77,7 @@ void LDGame::LoadAssets()
   // Create player
   player_ = new Person(this);
   player_->Create("player");
+  player_->set_responsive(false);
   player_->SetPosition(100, 0);
   player_->AddPhrase(QUESTION_WHO, "Who am I?");
 
@@ -117,6 +118,11 @@ void LDGame::LoadAssets()
 
 void LDGame::Step(int delta)
 {
+  player_->Step(delta);
+
+  for (auto& it : player_->room()->NPCVector())
+    it->Step(delta);
+
   if (move_player_ == MOVE_RIGHT) player_->Move(delta / 10.0f, 0);
   else if (move_player_ == MOVE_LEFT) player_->Move(-delta / 10.0f, 0);
 

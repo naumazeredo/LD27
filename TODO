@@ -82,13 +82,13 @@ Player
 
 Room
 - room size (int)       OK!!!
-- Doors (vector)
+- Doors (vector)        OK!!!
 - NPCs                  OK!!!
 - //Objects
 
-Door
+Door                    OK!!!
 - size (standard)
 - destination room
 
-NPC
+NPC                     OK!!!
 - response phrases
